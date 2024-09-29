@@ -32,7 +32,7 @@ public class POE1 {
         
         
         //Registration of a user
-        String registrationmessage = loginSystem.registeruser(username,password,firstName,lastName);
+        String registrationmessage = loginSystem.registerUser(username,password,firstName,lastName);
         System.out.println(registrationmessage);
         
         //Login of the user

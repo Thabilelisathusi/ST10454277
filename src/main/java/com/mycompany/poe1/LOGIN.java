@@ -20,11 +20,11 @@ public class LOGIN {
          
     }
     
-    public boolean checkpasswordcomplexity(String password){
+    public boolean checkPasswordComplexity(String password){
         if (password.length() < 8) return false;
        
         boolean hasuppercase = false;
-        boolean hasdigit = false;       
+        boolean hasDigit = false;       
         boolean hasspecialchar = false;
         
         //The password lenght will be in loop and the character will be at index i
@@ -35,7 +35,7 @@ public class LOGIN {
                
                 
             }else if (Character.isDigit(ch)){
-                hasdigit = true;
+                hasDigit = true;
                 
             }else if ("!@#$%^&*()-_+={}':;\"[]|/?<>/.,".indexOf(ch)>= 0){
                 hasspecialchar = true;
@@ -46,12 +46,12 @@ public class LOGIN {
        
     }
     
-    public String registeruser(String username, String password, String firstName,String lastName){
+    public String registerUser(String username, String password, String firstName,String lastName){
         if (!checkusername(username)){
             return "Username is not correctly formatted,please ensure that your username contains an underscore and is no more than 5 characters in lenght";
             
         }
-        if (!checkpasswordcomplexity(password)){
+        if (!checkPasswordComplexity(password)){
            return "Password is not correctly formatted,please ensure that the password contains at least 8 characters, a capital letter , a number and special character.";
         }
         //user information
@@ -61,9 +61,9 @@ public class LOGIN {
     this.lastName = lastName;
     
     return "User successfully registered";
-    
+    }
     public boolean loginUser(String username, String password) {
-    return this.username ! = null && this.username.equals(username)&& this.password.equals(password);
+    return this.username != null && this.username.equals(username)&& this.password.equals(password);
       
     
     }
@@ -81,4 +81,4 @@ public class LOGIN {
     
     
     
-}
+
