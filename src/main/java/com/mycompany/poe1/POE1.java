@@ -18,17 +18,44 @@ public class POE1 {
         
         System.out.println("Registration");
        
-        System.out.println("Enter Username");
+        System.out.println("Enter Username:");
         String username = sc.next();
         
-        System.out.println("Password");
+        System.out.println("Password:");
         String password = sc.next();
         
-        System.out.println("First Name");
+        System.out.println("First Name:");
         String firstName = sc.next();
         
-        System.out.println("Last Name");
+        System.out.println("Last Name:");
         String lastName = sc.next();
+        
+        
+        //Registration of a user
+        String registrationmessage = loginSystem.registeruser(username,password,firstName,lastName);
+        System.out.println(registrationmessage);
+        
+        //Login of the user
+        
+        System.out.println("Login");
+        
+        System.out.println("Enter Username:");
+        String loginusername = sc.nextLine();
+        
+        System.out.println("Enter password:");
+        String loginpassword = sc.nextLine();
+        
+            
+        boolean loginSuccess = loginSystem.loginUser(loginusername, loginpassword);
+        
+        //Login status
+        
+        System.out.println(loginSystem.returnLoginStatus(loginSuccess));
+        
+        
+        
+        
+        
         
         
         
