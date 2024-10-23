@@ -1,84 +1,151 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.poe1;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Scanner;
 
 /**
  *
  * @author RC_Student_lab
  */
 public class LOGIN {
-    private String username; //store username
-    private String password; //store password
-    private String firstName; //store firstname
-    private String lastName;  //Store lastname
+
+    private String username;
+    private String password;
+    private String name;
+    private String lastName;
+     
+    // Static Set for special characters to avoid recreating it
+    private static final Set<Character> specialCharacters = new HashSet<>(
+        Arrays.asList('!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+')
+    );
+
+    // Constructor
+    public LOGIN() {
+    }
+
+    // Getter and Setter for Username
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    // Getter and Setter for Password
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     
-    public boolean checkusername(String username) {
-        return username.contains("_") && username.length()<=5;
-         
+    public String getname() {
+        return name;
     }
     
-    public boolean checkPasswordComplexity(String password){
-        if (password.length() < 8) return false;
-       
-        boolean hasuppercase = false;
-        boolean hasDigit = false;       
-        boolean hasspecialchar = false;
+    public void setname(String name) {
+        this.name = name;
+    }
+    
+    public String getlastName() {
+        return lastName;
+    }
+    
+    public void setlastName(String lastName) {
+        this.lastName = lastName;
+    }
+    
+    
+     Scanner scanner = new Scanner(System.in);
+    
+    
+    
+    // Check if username contains an underscore and has at least 5 characters
+    public boolean checkUsername(String username) {
+        return username.contains("_") && username.length() <= 5;
+    }
+
+    // Method to check password complexity
+    public boolean checkPasswordComplexity(String password) {
+        int n = password.length();
+        boolean hasLower = false, hasUpper = false, hasDigit = false, specialChar = false;
+
+        for (char ch : password.toCharArray()) {
+            if (Character.isLowerCase(ch)) hasLower = true;
+            if (Character.isUpperCase(ch)) hasUpper = true;
+            if (Character.isDigit(ch)) hasDigit = true;
+            if (specialCharacters.contains(ch)) specialChar = true;
+        }
+        return hasLower && hasUpper && hasDigit && specialChar && n >= 8;
+    }
+
+    // Method to register user with validations
+    public String registerUser(String username, String password) {
+        boolean isUsernameValid = checkUsername(username);
+        boolean isPasswordValid = checkPasswordComplexity(password);
+         // Capture first name
+        System.out.print("Enter NAME: ");
+        name = scanner.next();
+
+        // Capture last name
+        System.out.print("Enter SURNAME: ");
+        lastName = scanner.next();
         
-        //The password lenght will be in loop and the character will be at index i
-        for(int i = 0; 1< password.length();i ++) {
-            char ch = password.charAt(i); 
-            if (Character.isUpperCase(ch)){
-                hasuppercase = true;
-               
-                
-            }else if (Character.isDigit(ch)){
-                hasDigit = true;
-                
-            }else if ("!@#$%^&*()-_+={}':;\"[]|/?<>/.,".indexOf(ch)>= 0){
-                hasspecialchar = true;
-            }
-            
-        }
-        return hasuppercase && hasspecialchar;
-       
-    }
-    
-    public String registerUser(String username, String password, String firstName,String lastName){
-        if (!checkusername(username)){
-            return "Username is not correctly formatted,please ensure that your username contains an underscore and is no more than 5 characters in lenght";
-            
-        }
-        if (!checkPasswordComplexity(password)){
-           return "Password is not correctly formatted,please ensure that the password contains at least 8 characters, a capital letter , a number and special character.";
-        }
-        //user information
-    this.username = username;
-    this.password = password;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    
-    return "User successfully registered";
-    }
-    public boolean loginUser(String username, String password) {
-    return this.username != null && this.username.equals(username)&& this.password.equals(password);
-      
-    
-    }
-    
-    public String returnLoginStatus(boolean success){
-        if (success) {
-            return "Welcome "+ firstName + "," + lastName + "It is great to see you again";
-        }else{
-            return "Username or password incorrect, please try again";
-        }
-            
-        }
-    }
-    
-    
-    
-    
 
+        if (!isUsernameValid && !isPasswordValid) {
+            return "Username is incorrectly formatted, and password does not meet the complexity requirements.";
+        } else if (!isUsernameValid) {
+            return "Username is incorrectly formatted. It should contain an underscore and be at least 5 characters long.";
+        } else if (!isPasswordValid) {
+            return "Password is not correctly formatted, please ensure that the password contains at least 8 characters, a capital letter, a number, and a special character.";
+        } else {
+            setUsername(username);
+            setPassword(password);
+            return "User successfully registered.";
+        }
+    }
+
+    // Method to log in user by checking entered credentials
+    public boolean loginUser(String enteredUsername, String enteredPassword) {
+        // Added null checks for safety
+        if (this.username == null || this.password == null) {
+            System.out.println("No registered user found.");
+            return false;
+        }
+        
+        if (this.username.equals(enteredUsername) && this.password.equals(enteredPassword)) {
+            System.out.println("Login successful!");
+            return true;
+        } else {
+            System.out.println("Login failed. Incorrect username or password.");
+            return false;
+        }
+    }
+
+    // New method to return login status
+    public String returnLoginStatus(String enteredUsername, String enteredPassword) {
+        if (loginUser(enteredUsername, enteredPassword)) {
+            return "Login successful!";
+        } else {
+            return "Login failed. Incorrect username or password.";
+        }
+    }
+
+    // Method to display user details
+    public void displayDetails() {
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + password);
+        
+//        if (isLoginSuccessful) {
+//            System.out.println("Welcome " + name + " " + lastName);  // Added a space between name and surname
+//        } else {
+//            System.out.println("Please try logging in again.");
+//        }
+//    }
+    }
+}

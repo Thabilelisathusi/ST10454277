@@ -16,119 +16,106 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author RC_Student_lab
  */
 public class LOGINTest {
-    
-    public LOGINTest() {
-    }
 
-    @org.junit.jupiter.api.BeforeAll
-    public static void setUpClass() throws Exception {
-    }
-
-    @org.junit.jupiter.api.AfterAll
-    public static void tearDownClass() throws Exception {
-    }
-
-    @org.junit.jupiter.api.BeforeEach
-    public void setUp() throws Exception {
-    }
-
-    @org.junit.jupiter.api.AfterEach
-    public void tearDown() throws Exception {
-    }
-    
-   /* @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
-    }
+   
 /*
     /**
      * Test of checkusername method, of class LOGIN.
      */
-    @org.junit.jupiter.api.Test
-    public void testCheckusername() {
-        System.out.println("checkusername");
-        String username = "Tha_b";
-        LOGIN instance = new LOGIN();
-        boolean expResult = false;
-        boolean result = instance.checkusername(username);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    @Test
 
-    /**
-     * Test of CheckPasswordComplexity method, of class LOGIN.
-     */
-    @org.junit.jupiter.api.Test
-    public void testcheckPasswordComplexity() {
-        System.out.println("checkpasswordcomplexity");
-        String password = "Close@3000";
-        LOGIN instance = new LOGIN();
-        boolean expResult = false;
-        boolean result = instance.checkPasswordComplexity(password);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+     
 
-    /**
-     * Test of registerUser method, of class LOGIN.
-     */
-    @org.junit.jupiter.api.Test
-    public void testRegisterUser() {
-        System.out.println("registeruser");
-        String username = "";
-        String password = "";
-        String firstName = "";
-        String lastName = "";
-        LOGIN instance = new LOGIN();
-        String expResult = "";
-        String result = instance.registerUser(username, password, firstName, lastName);
+    @Test 
+    public void testGetUsername() {
+        System.out.println("getUsername");
+        String expResult = "kyl_1";
+        instance.setUsername(expResult); 
+        String result = instance.getUsername();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
+@Test
+public void testSetUsername() {
+    System.out.println("setUsername");
+    String username = "kyl_1"; 
+    LOGIN instance = new LOGIN();
+    instance.setUsername(username);
+    assertEquals(username, instance.getUsername()); 
+}
+@Test
+public void testGetPassword() {
+    System.out.println("getPassword");
+    LOGIN instance = new LOGIN();
+    String expResult = "Ch&&sec@ke9g!"; 
+    instance.setPassword(expResult); 
+    String result = instance.getPassword();
+    assertEquals(expResult, result);
+}
+@Test
+public void testSetPassword() {
+    System.out.println("setPassword");
+    String password = "Ch&&sec@ke9g!"; 
+   LOGIN instance = new LOGIN();
+    instance.setPassword(password);
+    assertEquals(password, instance.getPassword()); 
+}
+@Test
+public void testCheckUsername() {
+    System.out.println("checkUsername");
+    String validUsername = "kyl_1"; 
+    String invalidUsername = "kyle!!!!!";
+   LOGIN instance = new LOGIN();
+    assertTrue(instance.checkUsername(validUsername));
+    assertFalse(instance.checkUsername(invalidUsername)); 
+}
+@Test
+public void testCheckPasswordComplexity() {
+    System.out.println("checkPasswordComplexity");
+    String validPassword = "Ch&&sec@ke9g!";
+    String invalidPassword = "password"; 
+    LOGIN instance = new LOGIN();
+    assertTrue(instance.checkPasswordComplexity(validPassword));
+    assertFalse(instance.checkPasswordComplexity(invalidPassword)); 
+}
+@Test
+public void testRegisterUser() {
+    System.out.println("registerUser");
+    String username = "kyl_1";
+    String password = "Ch&&sec@ke9g!";
+    LOGIN instance = new LOGIN();
+    String expResult = "User successfully registered.";
+    String result = instance.registerUser(username, password);
+    assertEquals(expResult, result);
+}
+@Test
+public void testLoginUser() {
+    System.out.println("loginUser");
+    String enteredUsername = "kyl_1";
+    String enteredPassword = "Ch&&sec@ke9g!";
+    LOGIN instance = new LOGIN();
+    instance.registerUser(enteredUsername, enteredPassword); 
+    assertTrue(instance.loginUser(enteredUsername, enteredPassword));
+    assertFalse(instance.loginUser("invalidUser", "invalidPass")); 
+}
+@Test
+public void testReturnLoginStatus() {
+    System.out.println("returnLoginStatus");
+    String enteredUsername = "kyl_1";
+    String enteredPassword = "Ch&&sec@ke9g!";
+    LOGIN instance = new LOGIN();
+    instance.registerUser(enteredUsername, enteredPassword); 
+    String expResult = "login successful!";
+    String result = instance.returnLoginStatus(enteredUsername, enteredPassword);
+    assertEquals(expResult, result);
+}
+@Test
+public void testDisplayDetails() {
+    System.out.println("displayDetails");
+    LOGIN instance = new LOGIN();
+    instance.setUsername("kyl_1");
+    instance.setPassword("Ch&&sec@ke9g!");
+    instance.displayDetails(); 
+}
 
-    /**
-     * Test of loginUser method, of class LOGIN.
-     */
-    @org.junit.jupiter.api.Test
-    public void testLoginUser() {
-        System.out.println("loginUser");
-        String username = "";
-        String password = "";
-        LOGIN instance = new LOGIN();
-        boolean expResult = false;
-        boolean result = instance.loginUser(username, password);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of returnLoginStatus method, of class LOGIN.
-     */
-    @org.junit.jupiter.api.Test
-    public void testReturnLoginStatus() {
-        System.out.println("returnLoginStatus");
-        boolean success = false;
-        LOGIN instance = new LOGIN();
-        String expResult = "";
-        String result = instance.returnLoginStatus(success);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
     
 }

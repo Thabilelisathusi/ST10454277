@@ -1,66 +1,55 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.poe1;
 import java.util.Scanner;  // Import the Scanner class
-/**
- *
- * @author RC_Student_lab
- */
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 public class POE1 {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);  // Create a Scanner object
-        LOGIN loginSystem = new LOGIN();
         
-        //Registration of varibles
+        Scanner scanner = new Scanner(System.in);  // Use one Scanner instance
+        LOGIN login = new LOGIN();
         
-        System.out.println("Registration");
+        String name = "";
+        String lastName = "";
+   
+        // Capture username
+        System.out.print("Enter Username: ");
+        String username = scanner.next();
+        login.setUsername(username);
+
+        // Capture password
+        System.out.print("Enter Password: ");
+        String password = scanner.next();
+        login.setPassword(password);
+        
        
-        System.out.println("Enter Username:");
-        String username = sc.next();
+        // Call the registerUser method and print the result
+        String registrationMessage = login.registerUser(username, password);
+        System.out.println(registrationMessage);
         
-        System.out.println("Password:");
-        String password = sc.next();
+        // Display details if registration was successful
+        if (registrationMessage.contains("successfully registered")) {
+            login.displayDetails();
+        }
         
-        System.out.println("First Name:");
-        String firstName = sc.next();
+        // User Login
+        System.out.print("\nEnter Username to login: ");
+        String loginUsername = scanner.next();
+        System.out.print("Enter Password to login: ");
+        String loginPassword = scanner.next();
         
-        System.out.println("Last Name:");
-        String lastName = sc.next();
-        
-        
-        //Registration of a user
-        String registrationmessage = loginSystem.registerUser(username,password,firstName,lastName);
-        System.out.println(registrationmessage);
-        
-        //Login of the user
-        
-        System.out.println("Login");
-        
-        System.out.println("Enter Username:");
-        String loginusername = sc.nextLine();
-        
-        System.out.println("Enter password:");
-        String loginpassword = sc.nextLine();
-        
-            
-        boolean loginSuccess = loginSystem.loginUser(loginusername, loginpassword);
-        
-        //Login status
-        
-        System.out.println(loginSystem.returnLoginStatus(loginSuccess));
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        // Call the loginUser method
+        boolean isLoginSuccessful = login.loginUser(loginUsername, loginPassword);
+      if (isLoginSuccessful) {
+            System.out.println("Welcome " + name + " " + lastName);  // Added a space between name and surname
+        } else {
+            System.out.println("Please try logging in again.");
+        }
     }
+  
+        
+        
+    
+    
+    
 }
