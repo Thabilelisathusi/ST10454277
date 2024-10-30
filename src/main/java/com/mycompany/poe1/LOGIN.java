@@ -141,11 +141,6 @@ public class LOGIN {
         System.out.println("Username: " + username);
         System.out.println("Password: " + password);
         
-//        if (isLoginSuccessful) {
-//            System.out.println("Welcome " + name + " " + lastName);  // Added a space between name and surname
-//        } else {
-//            System.out.println("Please try logging in again.");
-//        }
 //    }
     }
 }
