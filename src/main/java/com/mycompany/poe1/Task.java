@@ -79,6 +79,7 @@ public class Task {
                "\nDuration: " + taskDuration + " hours" +
                "\nStatus: " + taskStatus + 
                "\nTask ID: " + createTaskID(taskNumber);
-    }
 
+
+}
 }
