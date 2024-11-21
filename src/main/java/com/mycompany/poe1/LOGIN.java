@@ -88,14 +88,6 @@ public class LOGIN {
     public String registerUser(String username, String password) {
         boolean isUsernameValid = checkUsername(username);
         boolean isPasswordValid = checkPasswordComplexity(password);
-         // Capture first name
-        System.out.print("Enter NAME: ");
-        name = scanner.next();
-
-        // Capture last name
-        System.out.print("Enter SURNAME: ");
-        lastName = scanner.next();
-        
 
         if (!isUsernameValid && !isPasswordValid) {
             return "Username is incorrectly formatted, and password does not meet the complexity requirements.";

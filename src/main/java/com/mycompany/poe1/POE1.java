@@ -1,11 +1,15 @@
 package com.mycompany.poe1;
+
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.Scanner;
+
 ;
+
 public class POE1 {
 
-  public static void main(String[] args) {
+    private Task taskManager = new Task();
+
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         LOGIN login = new LOGIN();
 
@@ -39,7 +43,8 @@ public class POE1 {
             // Console output for login result
             if (isLoginSuccessful) {
                 System.out.println("Welcome to EasyKanban, " + firstName + " " + lastName + "!");
-                displayMenu(); // Show menu after successful login
+                POE1 poe = new POE1();
+                poe.displayMenu();  // Show menu after successful login
             } else {
                 System.out.println("Login failed. Please try again.");
             }
@@ -50,105 +55,47 @@ public class POE1 {
         scanner.close();
     }
 
-    private static void displayMenu() {
-        ArrayList<Task> tasks = new ArrayList<>();
-        int totalHours = 0; // Track total hours as an int
-
+    private void displayMenu() {
+        final JDialog dialog = new JDialog();
+        dialog.setAlwaysOnTop(true);
         while (true) {
-            String menu = "====== Menu =======\n"
-                    + "1. Add Task\n"
-                    + "2. Show Report\n"
-                    + "0. Exit";
 
-            String choice = JOptionPane.showInputDialog(menu, "Choose an option");
+            while (true) {
+                String options = """             
+                1. Add Task
+                2. Show report
+                3. Display Tasks with status 'Done'
+                4. Display Task with longest duration
+                5. Search Task by Task Name
+                6. Search Task by Developer
+                7. Delete Task By Task Name
+                8. Exit
+                    """;
 
-            if (choice == null) {
-                JOptionPane.showMessageDialog(null, "No option selected. Exiting the program.");
-                System.exit(0);
-            }
+                int choices = Integer.parseInt(JOptionPane.showInputDialog(null, options, "Select one option:", JOptionPane.PLAIN_MESSAGE));
 
-            switch (choice) {
-                case "1":
-                    String taskCountString = JOptionPane.showInputDialog("How many tasks would you like to add?", "Task Count");
-                    int numberOfTasks;
+                switch (choices) {
+                    case 1 ->
+                        taskManager.addTask();
+                    case 2 ->
+                        taskManager.displayTaskReport();
+                    case 3 ->
+                        taskManager.displayTasksWithStatusDone();
+                    case 4 ->
+                        taskManager.displayLongestTask();
+                    case 5 ->
+                        taskManager.searchTaskByName();
+                    case 6 ->
+                        taskManager.searchTasksByDeveloper();
+                    case 7 ->
+                        taskManager.deleteTask();
+                    case 8 ->
+                        taskManager.deleteTask();
+                    default ->
+                        JOptionPane.showMessageDialog(null, "Invalid choice. Please try again.");
+                }
 
-                    try {
-                        numberOfTasks = Integer.parseInt(taskCountString);
-                        if (numberOfTasks <= 0) {
-                            JOptionPane.showMessageDialog(null, "Please enter a valid number greater than 0.");
-                            continue;
-                        }
-                    } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(null, "Please enter a valid number.");
-                        continue;
-                    }
-
-                    for (int i = 0; i < numberOfTasks; i++) {
-                        Task task = new Task(); // Create a new Task instance
-
-                        String taskName = JOptionPane.showInputDialog("Enter Task Name for Task " + (i + 1), "Task Name");
-                        String taskDescription = JOptionPane.showInputDialog("Enter Task Description for Task " + (i + 1), "Task Description");
-                        String developerName = JOptionPane.showInputDialog("Enter Developer Name for Task " + (i + 1), "Developer Name");
-
-                        int taskDuration;
-                        while (true) {
-                            String durationString = JOptionPane.showInputDialog("Enter Duration (in hours) for Task " + (i + 1), "Task Duration");
-                            try {
-                                taskDuration = Integer.parseInt(durationString);
-                                if (taskDuration <= 0) {
-                                    JOptionPane.showMessageDialog(null, "Please enter a valid duration greater than 0.");
-                                    continue;
-                                }
-                                break; // Exit the loop if valid duration is entered
-                            } catch (NumberFormatException e) {
-                                JOptionPane.showMessageDialog(null, "Please enter a valid number.");
-                            }
-                        }
-
-                        String taskStatus = chooseTaskStatus();
-
-                        // Use setter methods to initialize the task
-                        task.setTaskName(taskName);
-                        task.setTaskDescription(taskDescription);
-                        task.setDeveloperName(developerName);
-                        task.setTaskDuration(taskDuration);
-                        task.setTaskStatus(taskStatus);
-
-                        // Add the task's duration to the total
-                        totalHours += taskDuration;
-
-                        // Add the task to the list
-                        tasks.add(task);
-
-                        JOptionPane.showMessageDialog(null, task.printTaskDetails(i + 1));
-
-                    }
-                    break;
-
-                case "2":
-                    JOptionPane.showMessageDialog(null, "Coming Soon");
-                    break;
-
-                case "0":
-                    JOptionPane.showMessageDialog(null, "Exiting the program...");
-                    System.exit(0);
-                    break;
-
-                default:
-                    JOptionPane.showMessageDialog(null, "Invalid choice! Please select a valid option.");
-                    break;
             }
         }
     }
-
-    private static String chooseTaskStatus() {
-        Object[] options = {"To Do", "Doing", "Done"};
-        String status = (String) JOptionPane.showInputDialog(null, "Choose task status:", "Task Status", JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-        
-        return status != null ? status : "To Do";
-        
-        
-    }  
-    
-    
 }
